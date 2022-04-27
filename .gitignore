@@ -70,4 +70,6 @@ _deps
 build.gradle
 AndroidManifest.xml
 src/Example/Deploy/RENAME_ME.json
-src/Library/src/public/RENAME_ME/global.h
+src/Library/src/public/QtNativeTr/global.h
+src/Library/languages/
+src/Library/QtNativeTr.qrc

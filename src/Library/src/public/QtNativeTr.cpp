@@ -5,18 +5,18 @@
 //# of this license document, but changing it is not allowed.
 //#
 
-#include "RENAME_ME.h"
+#include "QtNativeTr.h"
 
 
-namespace RENAME_ME {
+namespace QtNativeTr {
 
 bool init() {
-    initRENAME_MEResources();
+    initQtNativeTrResources();
     return true;
 }
 
 QString version() {
-    return RENAME_ME_VERSION;
+    return QT_NATIVETR_VERSION;
 }
 
 

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/QtNativeTr">
+        @RESOURCES_LIST@
+    </qresource>
+
+</RCC>

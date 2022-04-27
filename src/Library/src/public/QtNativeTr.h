@@ -5,23 +5,23 @@
 //# of this license document, but changing it is not allowed.
 //#
 
-#include "RENAME_ME/global.h"
+#include "QtNativeTr/global.h"
 #include <QString>
 
-inline void initRENAME_MEResources() { Q_INIT_RESOURCE(RENAME_ME); }
+inline void initQtNativeTrResources() { Q_INIT_RESOURCE(QtNativeTr); }
 
-namespace RENAME_ME {
+namespace QtNativeTr {
 
 /**
- * @brief init main initialize method of The RENAME_ME library
+ * @brief init main initialize method of The QtNativeTr library
  * @return true if library initialized successfull
  */
-bool RENAME_ME_EXPORT init();
+bool QT_NATIVETR_EXPORT init();
 
 /**
  * @brief version This method return string value of a library version
  * @return string value of a library version
  */
-QString RENAME_ME_EXPORT version();
+QString QT_NATIVETR_EXPORT version();
 
 };

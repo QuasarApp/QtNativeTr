@@ -7,25 +7,22 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-add_definitions(-DRENAME_ME_LIBRARY)
+add_definitions(-DQT_NATIVETR_LIBRARY)
 
 
 file(GLOB SOURCE_CPP
     "src/public/*.cpp"
-    "src/public/RENAME_ME/*.cpp"
+    "src/public/QtNativeTr/*.cpp"
     "src/private/*.cpp"
 
     "src/public/*.h"
-    "src/public/RENAME_ME/*.h"
+    "src/public/QtNativeTr/*.h"
     "src/private/*.h"
 )
 
-if (${QT_VERSION_MAJOR})
-    file(GLOB SOURCE_QRC
-        "*.qrc"
-    )
-
-endif()
+file(GLOB SOURCE_QRC
+    "*.qrc"
+)
 
 set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/public")
 set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
@@ -33,19 +30,28 @@ set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
 
 add_library(${PROJECT_NAME} ${SOURCE_CPP} ${SOURCE_QRC})
 
-if (${QT_VERSION_MAJOR})
-    target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
-endif()
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Core )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_INCUDE_DIR})
 
-set(LANGS ${CMAKE_CURRENT_SOURCE_DIR}/languages/en.ts)
-
-
-prepareQM(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR} "${LANGS}")
-
-set(QML_IMPORT_PATH ${QML_IMPORT_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/src" CACHE STRING "" FORCE)
-
-set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/RENAME_ME/global.h")
+set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/QtNativeTr/global.h")
 configure_file("${global_file}.in" ${global_file} @ONLY)
+
+set(QT_TRANSLATIONS_PATH "${Qt${QT_VERSION_MAJOR}_DIR}/../../../translations")
+file(GLOB QT_TRANSLATIONS_QM
+    "${QT_TRANSLATIONS_PATH}/*.qm"
+    "${QT_TRANSLATIONS_PATH}/*/*.qm"
+)
+
+set(RESOURCES_LIST)
+foreach(QT_QM ${QT_TRANSLATIONS_QM})
+    get_filename_component(QT_QM_NAME ${QT_QM} NAME)
+    message("Deploy : ${QT_QM_NAME}")
+    configure_file("${QT_QM}" "${CMAKE_CURRENT_SOURCE_DIR}/languages/${QT_QM_NAME}" @ONLY)
+    string(APPEND RESOURCES_LIST "<file>languages/${QT_QM_NAME}</file>\n        ")
+endforeach()
+
+set(resources_file "${CMAKE_CURRENT_SOURCE_DIR}/QtNativeTr.qrc")
+configure_file("${resources_file}.in" ${resources_file} @ONLY)
+

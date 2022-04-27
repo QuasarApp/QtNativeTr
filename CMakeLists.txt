@@ -6,7 +6,7 @@
 #
 
 cmake_minimum_required(VERSION 3.14)
-project(RENAME_ME LANGUAGES CXX)
+project(QtNativeTr LANGUAGES CXX)
 if(TARGET ${PROJECT_NAME})
   message("The ${PROJECT_NAME} arledy included in main Project")
   return()
@@ -25,39 +25,31 @@ if (ANDROID OR IOS)
 endif()
 
 if (NOT QT_VERSION_MAJOR)
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test REQUIRED)
 endif()
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test REQUIRED)
 
 include(submodules/CMake/QuasarApp.cmake)
 
 updateGitVars()
-set(RENAME_ME_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
-set(RENAME_ME_PACKAGE_ID "quasarapp.core.RENAME_ME")
+set(QT_NATIVETR_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+set(QT_NATIVETR_PACKAGE_ID "quasarapp.core.QtNativeTr")
 
-if (NOT DEFINED RENAME_ME_TESTS)
-    set(RENAME_ME_TESTS ON)
+if (NOT DEFINED QT_NATIVETR_TESTS)
+    set(QT_NATIVETR_TESTS OFF)
 
     if (DEFINED TARGET_PLATFORM_TOOLCHAIN)
         if (${TARGET_PLATFORM_TOOLCHAIN} STREQUAL "wasm32")
-            set(RENAME_ME_TESTS OFF)
+            set(QT_NATIVETR_TESTS OFF)
         endif()
     endif()
 
     if (ANDROID OR IOS)
-        set(RENAME_ME_TESTS OFF)
+        set(QT_NATIVETR_TESTS OFF)
     endif()
 
     if (NOT QT_VERSION_MAJOR)
-        set(RENAME_ME_TESTS OFF)
-    endif()
-endif()
-
-if (NOT DEFINED RENAME_ME_EXAMPLE)
-    set(RENAME_ME_EXAMPLE ON)
-
-    if (NOT QT_VERSION_MAJOR)
-        set(RENAME_ME_EXAMPLE OFF)
+        set(QT_NATIVETR_TESTS OFF)
     endif()
 endif()
 
@@ -67,11 +59,7 @@ initAll()
 
 add_subdirectory(src/Library)
 
-if (DEFINED RENAME_ME_EXAMPLE)
-    add_subdirectory(src/Example)
-endif()
-
-if (RENAME_ME_TESTS)
+if (QT_NATIVETR_TESTS)
     add_subdirectory(tests)
 else()
     message("The ${PROJECT_NAME} tests is disabled.")
@@ -79,4 +67,4 @@ endif()
 
 
 addDoc(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
-addDeployFromCustomFile("RENAME_ME" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/RENAME_ME.json")
+addDeployFromCustomFile("QtNativeTr" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/QtNativeTr.json")
