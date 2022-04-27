@@ -24,7 +24,7 @@ This is may need to static qt builds and builds for mobile devices like a Androi
 Simple include resource to your project looks like this:
 
 ``` cpp
-#include <"QtNativeTr.h">
+#include <QtNativeTr.h>
 
 int main () {
 
@@ -46,7 +46,7 @@ If you want to add dynamic loading for qt translation you can user [QuasarAppLib
 
 ```cpp
 #include <QtNativeTr.h>
-#include <quasarapp.h
+#include <quasarapp.h>
 
 int main () {
 
