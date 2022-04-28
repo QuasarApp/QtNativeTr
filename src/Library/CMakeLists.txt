@@ -9,6 +9,23 @@ cmake_minimum_required(VERSION 3.14)
 
 add_definitions(-DQT_NATIVETR_LIBRARY)
 
+set(QT_TRANSLATIONS_PATH "${Qt${QT_VERSION_MAJOR}_DIR}/../../../translations")
+file(GLOB QT_TRANSLATIONS_QM
+    "${QT_TRANSLATIONS_PATH}/*.qm"
+    "${QT_TRANSLATIONS_PATH}/*/*.qm"
+)
+
+set(RESOURCES_LIST)
+foreach(QT_QM ${QT_TRANSLATIONS_QM})
+    get_filename_component(QT_QM_NAME ${QT_QM} NAME)
+    message("Deploy : ${QT_QM_NAME}")
+    configure_file("${QT_QM}" "${CMAKE_CURRENT_SOURCE_DIR}/languages/${QT_QM_NAME}" @ONLY)
+    string(APPEND RESOURCES_LIST "<file>languages/${QT_QM_NAME}</file>\n        ")
+endforeach()
+
+set(resources_file "${CMAKE_CURRENT_SOURCE_DIR}/QtNativeTr.qrc")
+configure_file("${resources_file}.in" ${resources_file} @ONLY)
+
 
 file(GLOB SOURCE_CPP
     "src/public/*.cpp"
@@ -38,20 +55,4 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PRIVATE_INCUDE_DIR})
 set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/QtNativeTr/global.h")
 configure_file("${global_file}.in" ${global_file} @ONLY)
 
-set(QT_TRANSLATIONS_PATH "${Qt${QT_VERSION_MAJOR}_DIR}/../../../translations")
-file(GLOB QT_TRANSLATIONS_QM
-    "${QT_TRANSLATIONS_PATH}/*.qm"
-    "${QT_TRANSLATIONS_PATH}/*/*.qm"
-)
-
-set(RESOURCES_LIST)
-foreach(QT_QM ${QT_TRANSLATIONS_QM})
-    get_filename_component(QT_QM_NAME ${QT_QM} NAME)
-    message("Deploy : ${QT_QM_NAME}")
-    configure_file("${QT_QM}" "${CMAKE_CURRENT_SOURCE_DIR}/languages/${QT_QM_NAME}" @ONLY)
-    string(APPEND RESOURCES_LIST "<file>languages/${QT_QM_NAME}</file>\n        ")
-endforeach()
-
-set(resources_file "${CMAKE_CURRENT_SOURCE_DIR}/QtNativeTr.qrc")
-configure_file("${resources_file}.in" ${resources_file} @ONLY)
 
