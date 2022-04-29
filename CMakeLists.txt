@@ -53,8 +53,6 @@ if (NOT DEFINED QT_NATIVETR_TESTS)
     endif()
 endif()
 
-make_directory(Distro)
-
 initAll()
 
 add_subdirectory(src/Library)
@@ -67,4 +65,3 @@ endif()
 
 
 addDoc(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf)
-addDeployFromCustomFile("QtNativeTr" "${CMAKE_CURRENT_SOURCE_DIR}/Deploy/QtNativeTr.json")
