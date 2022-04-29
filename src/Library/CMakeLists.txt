@@ -18,8 +18,8 @@ file(GLOB QT_TRANSLATIONS_QM
 set(RESOURCES_LIST)
 foreach(QT_QM ${QT_TRANSLATIONS_QM})
     get_filename_component(QT_QM_NAME ${QT_QM} NAME)
-    message("Deploy : ${QT_QM_NAME}")
-    configure_file("${QT_QM}" "${CMAKE_CURRENT_SOURCE_DIR}/languages/${QT_QM_NAME}" @ONLY)
+    message("Deploy : ${QT_QM}")
+    file(COPY "${QT_QM}" DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/languages/")
     string(APPEND RESOURCES_LIST "<file>languages/${QT_QM_NAME}</file>\n        ")
 endforeach()
 
