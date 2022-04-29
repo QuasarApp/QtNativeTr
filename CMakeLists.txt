@@ -53,6 +53,7 @@ if (NOT DEFINED QT_NATIVETR_TESTS)
     endif()
 endif()
 
+make_directory(Distro)
 initAll()
 
 add_subdirectory(src/Library)
