@@ -32,7 +32,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test REQUIRED)
 include(submodules/CMake/QuasarApp.cmake)
 
 updateGitVars()
-set(QT_NATIVETR_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+set(QT_NATIVETR_VERSION "1.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
 set(QT_NATIVETR_PACKAGE_ID "quasarapp.core.QtNativeTr")
 
 if (NOT DEFINED QT_NATIVETR_TESTS)
